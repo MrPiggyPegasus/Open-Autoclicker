@@ -1,0 +1,37 @@
+import lc.kra.system.keyboard.event.GlobalKeyEvent;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
+
+public class Autoclicker extends Thread {
+    public static boolean active = false;
+    public static int hotKey = GlobalKeyEvent.VK_F8;
+    public static Robot robot;
+    public static Autoclicker autoclicker;
+    public static void toggle() {
+        if (active) {
+            autoclicker.interrupt();
+            active = false;
+        } else {
+            autoclicker = new Autoclicker();
+            try {
+                robot = new Robot();
+            } catch (AWTException ignored) {}
+            autoclicker.start();
+            active = true;
+        }
+    }
+    @Override
+    public void run() {
+        boolean rep = true;
+        while (rep) {
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                rep = false;
+            }
+        }
+    }
+}
