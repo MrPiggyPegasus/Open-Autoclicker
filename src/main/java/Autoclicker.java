@@ -6,7 +6,6 @@ import java.awt.event.InputEvent;
 
 public class Autoclicker extends Thread {
     public static boolean active = false;
-    public static int delay = 10;
     public static int hotkey = NativeKeyEvent.VC_F8;
     public static Robot robot;
     public static Autoclicker autoclicker;
@@ -30,7 +29,7 @@ public class Autoclicker extends Thread {
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
             try {
-                Thread.sleep(delay);
+                Thread.sleep(Math.max(GUI.getDelay(), 10));
             } catch (InterruptedException e) {
                 rep = false;
             }
