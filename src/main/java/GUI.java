@@ -11,6 +11,7 @@ public class GUI extends JFrame implements ActionListener {
         return Integer.parseInt(delayFieldObject.getValue().toString());
     }
     public static JFormattedTextField delayFieldObject;
+    public static JPanel hotkeyBox;
     GUI() {
         JPanel banner = new JPanel();
         banner.setBounds(0,0,400,30);
@@ -22,7 +23,6 @@ public class GUI extends JFrame implements ActionListener {
         title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         banner.add(title);
         title.setHorizontalAlignment(JLabel.CENTER);
-
 
         JPanel delay = new JPanel();
         delay.setBounds(30 ,40, 60,60);
@@ -61,11 +61,11 @@ public class GUI extends JFrame implements ActionListener {
         delayFieldObject = delayField;
         delay.add(delayField);
 
-        JPanel hotkeyBox = new JPanel();
+        hotkeyBox = new JPanel();
         hotkeyBox.setBounds(165, 40, 70, 70);
         hotkeyBox.setBackground(Color.DARK_GRAY);
         hotkeyBox.setLayout(new BorderLayout());
-        hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 3, false));
+        hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, false));
         JLabel hotkey = new JLabel();
         hotkey.setText("F8");
         hotkey.setForeground(Color.LIGHT_GRAY);
@@ -73,7 +73,7 @@ public class GUI extends JFrame implements ActionListener {
         hotkeyBox.add(hotkey);
         hotkey.setHorizontalAlignment(JLabel.CENTER);
 
-
+        this.setTitle("Open Autoclicker");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLayout(null);

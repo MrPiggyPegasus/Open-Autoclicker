@@ -1,6 +1,7 @@
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 
@@ -13,6 +14,7 @@ public class Autoclicker extends Thread {
         if (active) {
             autoclicker.interrupt();
             active = false;
+            GUI.hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, false));
         } else {
             autoclicker = new Autoclicker();
             try {
@@ -20,6 +22,7 @@ public class Autoclicker extends Thread {
             } catch (AWTException ignored) {}
             autoclicker.start();
             active = true;
+            GUI.hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5, false));
         }
     }
     @Override
