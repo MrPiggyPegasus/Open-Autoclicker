@@ -1,11 +1,13 @@
-import lc.kra.system.keyboard.event.GlobalKeyEvent;
+
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 
 public class Autoclicker extends Thread {
     public static boolean active = false;
-    public static int hotKey = GlobalKeyEvent.VK_F8;
+    public static int delay = 10;
+    public static int hotkey = NativeKeyEvent.VC_F8;
     public static Robot robot;
     public static Autoclicker autoclicker;
     public static void toggle() {
@@ -28,7 +30,7 @@ public class Autoclicker extends Thread {
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
             try {
-                Thread.sleep(10);
+                Thread.sleep(delay);
             } catch (InterruptedException e) {
                 rep = false;
             }

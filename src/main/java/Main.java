@@ -1,26 +1,39 @@
-import lc.kra.system.keyboard.GlobalKeyboardHook;
-import lc.kra.system.keyboard.event.GlobalKeyAdapter;
-import lc.kra.system.keyboard.event.GlobalKeyEvent;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
 
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
 
         new GUI();
-
-
-        // Hook for global hotkeys using https://github.com/kristian/system-hook
-        GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook(true);
-        keyboardHook.addKeyListener(new GlobalKeyAdapter() {
-            @Override
-            public void keyPressed(GlobalKeyEvent event) {
-                if(event.getVirtualKeyCode()==Autoclicker.hotKey) {
-                    Autoclicker.toggle();
+        try {
+            GlobalScreen.registerNativeHook();
+            LogManager.getLogManager().reset();
+            Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+            logger.setLevel(Level.OFF);
+            GlobalScreen.addNativeKeyListener(new NativeKeyListener()
+            {
+                @Override
+                public void nativeKeyTyped(NativeKeyEvent nativeEvent) {
                 }
-            }
-            @Override
-            public void keyReleased(GlobalKeyEvent event) {
-            }
-        });
+                @Override
+                public void nativeKeyReleased(NativeKeyEvent nativeEvent) {
+                }
+                @Override
+                public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
+                    if(nativeEvent.getKeyCode()==Autoclicker.hotkey) {
+                        Autoclicker.toggle();
+                    }
+                }
+            });
+        }
+        catch (NativeHookException e) {
+            System.exit(1);
+        }
     }
 }
