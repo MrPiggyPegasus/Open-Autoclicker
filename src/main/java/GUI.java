@@ -1,23 +1,30 @@
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Objects;
 import java.util.Properties;
 
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame {
     public static int getDelay() {
         return Integer.parseInt(delayFieldObject.getValue().toString());
     }
     public static JFormattedTextField delayFieldObject;
     public static JPanel hotkeyBox;
     public static int defaultDelay;
+    public static Properties prop;
+
+    public static void saveDelay() {
+        if(delayFieldObject.getValue() == null) {
+            prop.setProperty("delay", "10");
+        } else {
+            prop.setProperty("delay", delayFieldObject.getValue().toString());
+        }
+    }
     GUI() {
-        Properties prop = null;
         try {
             FileInputStream fis = new FileInputStream(Objects.requireNonNull(getClass().getResource("config.properties")).getPath());
             prop = new Properties();
@@ -70,6 +77,7 @@ public class GUI extends JFrame implements ActionListener {
         formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
+        formatter.setMinimum(0);
         formatter.setMaximum(60000);
         JFormattedTextField delayField = new JFormattedTextField(formatter);
         delayField.setBounds(0, 0, 60, 20);
@@ -99,10 +107,5 @@ public class GUI extends JFrame implements ActionListener {
         this.add(delay);
         this.add(hotkeyBox);
         this.setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }

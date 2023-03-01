@@ -11,6 +11,8 @@ public class Main {
     public static void main(String[] args) {
 
         new GUI();
+
+        new AutoSave().start();
         try {
             GlobalScreen.registerNativeHook();
             LogManager.getLogManager().reset();
