@@ -3,8 +3,11 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Objects;
+import java.util.Properties;
 
 public class GUI extends JFrame implements ActionListener {
     public static int getDelay() {
@@ -12,9 +15,23 @@ public class GUI extends JFrame implements ActionListener {
     }
     public static JFormattedTextField delayFieldObject;
     public static JPanel hotkeyBox;
+    public static int defaultDelay;
     GUI() {
+        Properties prop = null;
+        try {
+            FileInputStream fis = new FileInputStream(Objects.requireNonNull(getClass().getResource("config.properties")).getPath());
+            prop = new Properties();
+            prop.load(fis);
+        } catch (IOException e) {
+            // config.properties not found
+            e.printStackTrace();
+            System.exit(1);
+        }
+        defaultDelay = Integer.parseInt(prop.getProperty("delay"));
+        Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
+
         JPanel banner = new JPanel();
-        banner.setBounds(0,0,400,30);
+        banner.setBounds(0, 0, 400, 30);
         banner.setLayout(new BorderLayout());
         banner.setBackground(Color.DARK_GRAY);
         JLabel title = new JLabel();
@@ -25,14 +42,14 @@ public class GUI extends JFrame implements ActionListener {
         title.setHorizontalAlignment(JLabel.CENTER);
 
         JPanel delay = new JPanel();
-        delay.setBounds(30 ,40, 60,60);
+        delay.setBounds(30, 40, 60, 60);
         delay.setBackground(Color.DARK_GRAY);
         delay.setLayout(null);
         JLabel delayLabel = new JLabel();
         delayLabel.setText("Delay");
         delayLabel.setForeground(Color.LIGHT_GRAY);
         delayLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
-        delayLabel.setBounds(0,20,60,15);
+        delayLabel.setBounds(0, 20, 60, 15);
         delay.add(delayLabel);
         JLabel delayMsLabel = new JLabel();
         delayMsLabel.setText("(ms)");
@@ -44,7 +61,7 @@ public class GUI extends JFrame implements ActionListener {
         NumberFormatter formatter = new NumberFormatter(format) {
             @Override
             public Object stringToValue(String text) throws ParseException {
-                if (text.length()==0) {
+                if (text.length() == 0) {
                     return null;
                 }
                 return super.stringToValue(text);
@@ -55,9 +72,9 @@ public class GUI extends JFrame implements ActionListener {
         formatter.setCommitsOnValidEdit(true);
         formatter.setMaximum(60000);
         JFormattedTextField delayField = new JFormattedTextField(formatter);
-        delayField.setBounds(0,0,60,20);
+        delayField.setBounds(0, 0, 60, 20);
         delayField.setEditable(true);
-        delayField.setValue(10);
+        delayField.setValue(defaultDelay);
         delayFieldObject = delayField;
         delay.add(delayField);
 
@@ -77,7 +94,7 @@ public class GUI extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLayout(null);
-        this.setSize(400,190);
+        this.setSize(400, 190);
         this.add(banner);
         this.add(delay);
         this.add(hotkeyBox);
