@@ -24,16 +24,14 @@ public class GUI extends JFrame {
         try {
             prop.setProperty("delay", delayFieldObject.getValue().toString());
             FileOutputStream fos = new FileOutputStream(file);
-            prop.store(fos, "properties");
-            fos.close();
-            System.out.println("saving");
+            prop.store(fos, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.exit(1);
         }
     }
     GUI() {
         try {
-            FileInputStream fis = new FileInputStream(Objects.requireNonNull(getClass().getResource("config.properties")).getPath());
+            FileInputStream fis = new FileInputStream("src/config.properties");
             prop = new Properties();
             prop.load(fis);
         } catch (IOException e) {
@@ -41,7 +39,7 @@ public class GUI extends JFrame {
             e.printStackTrace();
             System.exit(1);
         }
-        file = new File(Objects.requireNonNull(getClass().getResource("config.properties")).getPath());
+        file = new File("src/config.properties");
         defaultDelay = Integer.parseInt(prop.getProperty("delay"));
         Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("icon.jpg")));
