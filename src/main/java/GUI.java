@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -16,12 +18,17 @@ public class GUI extends JFrame {
     public static JPanel hotkeyBox;
     public static int defaultDelay;
     public static Properties prop;
+    public static File file;
 
     public static void saveDelay() {
-        if(delayFieldObject.getValue() == null) {
-            prop.setProperty("delay", "10");
-        } else {
+        try {
             prop.setProperty("delay", delayFieldObject.getValue().toString());
+            FileOutputStream fos = new FileOutputStream(file);
+            prop.store(fos, "properties");
+            fos.close();
+            System.out.println("saving");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     GUI() {
@@ -34,8 +41,10 @@ public class GUI extends JFrame {
             e.printStackTrace();
             System.exit(1);
         }
+        file = new File(Objects.requireNonNull(getClass().getResource("config.properties")).getPath());
         defaultDelay = Integer.parseInt(prop.getProperty("delay"));
         Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("icon.jpg")));
 
         JPanel banner = new JPanel();
         banner.setBounds(0, 0, 400, 30);
@@ -98,6 +107,7 @@ public class GUI extends JFrame {
         hotkeyBox.add(hotkey);
         hotkey.setHorizontalAlignment(JLabel.CENTER);
 
+        this.setIconImage(icon.getImage());
         this.setTitle("Open Autoclicker");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.DARK_GRAY);

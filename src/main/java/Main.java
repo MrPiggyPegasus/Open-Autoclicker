@@ -12,7 +12,8 @@ public class Main {
 
         new GUI();
 
-        new AutoSave().start();
+        Runtime.getRuntime().addShutdownHook(new Thread(GUI::saveDelay));
+
         try {
             GlobalScreen.registerNativeHook();
             LogManager.getLogManager().reset();

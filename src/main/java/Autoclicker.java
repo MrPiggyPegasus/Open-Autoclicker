@@ -1,4 +1,3 @@
-
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 import javax.swing.*;
