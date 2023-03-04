@@ -93,6 +93,18 @@ public class GUI extends JFrame {
         delayFieldObject = delayField;
         delay.add(delayField);
 
+        JButton hotkeyButton = new JButton();
+        hotkeyButton.setLayout(null);
+        hotkeyButton.setBounds(305,40,60,30);
+        hotkeyButton.setBackground(Color.LIGHT_GRAY);
+        JLabel hotkeyLabel = new JLabel();
+        hotkeyLabel.setBounds(2,0,58,30);
+        hotkeyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+        hotkeyLabel.setText("Edit Hotkey");
+        hotkeyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+        hotkeyButton.add(hotkeyLabel);
+
+
         hotkeyBox = new JPanel();
         hotkeyBox.setBounds(165, 40, 70, 70);
         hotkeyBox.setBackground(Color.DARK_GRAY);
@@ -105,6 +117,7 @@ public class GUI extends JFrame {
         hotkeyBox.add(hotkey);
         hotkey.setHorizontalAlignment(JLabel.CENTER);
 
+
         this.setIconImage(icon.getImage());
         this.setTitle("Open Autoclicker");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,6 +127,7 @@ public class GUI extends JFrame {
         this.add(banner);
         this.add(delay);
         this.add(hotkeyBox);
+        this.add(hotkeyButton);
         this.setVisible(true);
     }
 }
