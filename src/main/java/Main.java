@@ -9,18 +9,14 @@ import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
-
         new GUI();
-
         Runtime.getRuntime().addShutdownHook(new Thread(GUI::saveDelay));
-
         try {
             GlobalScreen.registerNativeHook();
             LogManager.getLogManager().reset();
             Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
             logger.setLevel(Level.OFF);
-            GlobalScreen.addNativeKeyListener(new NativeKeyListener()
-            {
+            GlobalScreen.addNativeKeyListener(new NativeKeyListener() {
                 @Override
                 public void nativeKeyTyped(NativeKeyEvent nativeEvent) {
                 }
@@ -31,6 +27,9 @@ public class Main {
                 public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
                     if(nativeEvent.getKeyCode()==Autoclicker.hotkey) {
                         Autoclicker.toggle();
+                    }
+                    if(HotkeyChanger.active) {
+                        GUI.hotkeyChanger.close(nativeEvent.getKeyCode());
                     }
                 }
             });

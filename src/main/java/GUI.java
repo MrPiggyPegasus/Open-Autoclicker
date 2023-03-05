@@ -16,10 +16,12 @@ public class GUI extends JFrame {
     }
     public static JFormattedTextField delayFieldObject;
     public static JPanel hotkeyBox;
+    public static JLabel hotkeyLabel = new JLabel();
+    public static JButton hotkeyButton;
+    public static HotkeyChanger hotkeyChanger;
     public static int defaultDelay;
     public static Properties prop;
     public static File file;
-
     public static void saveDelay() {
         try {
             prop.setProperty("delay", delayFieldObject.getValue().toString());
@@ -93,18 +95,33 @@ public class GUI extends JFrame {
         delayFieldObject = delayField;
         delay.add(delayField);
 
+        hotkeyButton = new JButton();
+        hotkeyButton.setLayout(null);
+        hotkeyButton.setBounds(305,40,60,30);
+        hotkeyButton.setBackground(Color.LIGHT_GRAY);
+        JLabel hotkeyButtonLabel = new JLabel();
+        hotkeyButtonLabel.setBounds(2,0,58,30);
+        hotkeyButtonLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+        hotkeyButtonLabel.setText("Edit Hotkey");
+        hotkeyButtonLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+        hotkeyButton.add(hotkeyButtonLabel);
+        hotkeyButton.setFocusable(false);
+        hotkeyButton.addActionListener(GUI::hotkeyButtonListener);
+
         hotkeyBox = new JPanel();
         hotkeyBox.setBounds(165, 40, 70, 70);
         hotkeyBox.setBackground(Color.DARK_GRAY);
         hotkeyBox.setLayout(new BorderLayout());
         hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, false));
-        JLabel hotkey = new JLabel();
-        hotkey.setText("F8");
-        hotkey.setForeground(Color.LIGHT_GRAY);
-        hotkey.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 35));
-        hotkeyBox.add(hotkey);
-        hotkey.setHorizontalAlignment(JLabel.CENTER);
+        String hotkeyText=(prop.getProperty("hotkey"));
+        Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
+        hotkeyLabel.setText(hotkeyText);
+        hotkeyLabel.setForeground(Color.LIGHT_GRAY);
+        hotkeyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 35));
+        hotkeyBox.add(hotkeyLabel);
+        hotkeyLabel.setHorizontalAlignment(JLabel.CENTER);
 
+        this.setLocationRelativeTo(null);
         this.setIconImage(icon.getImage());
         this.setTitle("Open Autoclicker");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,6 +131,12 @@ public class GUI extends JFrame {
         this.add(banner);
         this.add(delay);
         this.add(hotkeyBox);
+        this.add(hotkeyButton);
         this.setVisible(true);
+    }
+    public static void hotkeyButtonListener(AWTEvent e) {
+        if(!(HotkeyChanger.active)) {
+            hotkeyChanger = new HotkeyChanger();
+        }
     }
 }

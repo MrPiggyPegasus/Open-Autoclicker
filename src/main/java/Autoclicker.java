@@ -1,4 +1,3 @@
-import org.jnativehook.keyboard.NativeKeyEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +5,7 @@ import java.awt.event.InputEvent;
 
 public class Autoclicker extends Thread {
     public static boolean active = false;
-    public static int hotkey = NativeKeyEvent.VC_F8;
+    public static int hotkey;
     public static Robot robot;
     public static Autoclicker autoclicker;
     public static void toggle() {
@@ -14,7 +13,9 @@ public class Autoclicker extends Thread {
             autoclicker.interrupt();
             active = false;
             GUI.hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, false));
+            GUI.delayFieldObject.setEditable(true);
         } else {
+            GUI.delayFieldObject.setEditable(false);
             autoclicker = new Autoclicker();
             try {
                 robot = new Robot();
