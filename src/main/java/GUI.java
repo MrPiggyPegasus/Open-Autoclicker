@@ -1,3 +1,5 @@
+import org.jnativehook.keyboard.NativeKeyEvent;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -113,11 +115,11 @@ public class GUI extends JFrame {
         hotkeyBox.setBackground(Color.DARK_GRAY);
         hotkeyBox.setLayout(new BorderLayout());
         hotkeyBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, false));
-        String hotkeyText=(prop.getProperty("hotkey"));
+        String hotkeyText = "<HTML>"+NativeKeyEvent.getKeyText(Integer.parseInt(prop.getProperty("hotkey")))+"</HTML>";
         Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
         hotkeyLabel.setText(hotkeyText);
         hotkeyLabel.setForeground(Color.LIGHT_GRAY);
-        hotkeyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 35));
+        hotkeyLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         hotkeyBox.add(hotkeyLabel);
         hotkeyLabel.setHorizontalAlignment(JLabel.CENTER);
 
@@ -135,7 +137,7 @@ public class GUI extends JFrame {
         this.setVisible(true);
     }
     public static void hotkeyButtonListener(AWTEvent e) {
-        if(!(HotkeyChanger.active)) {
+        if(!HotkeyChanger.active && !Autoclicker.active) {
             hotkeyChanger = new HotkeyChanger();
         }
     }

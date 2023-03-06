@@ -1,17 +1,17 @@
+import org.jnativehook.keyboard.NativeKeyEvent;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 public class HotkeyChanger extends JFrame {
     public static boolean active = false;
+
     public HotkeyChanger() {
-        if (active) {
-            this.dispose();
-        }
         active = true;
         JLabel label = new JLabel();
         label.setText("Press new hotkey:");
-        label.setFont( new Font(Font.SANS_SERIF, Font.BOLD, 25));
-        label.setBounds(0,0,250,40);
+        label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
+        label.setBounds(0, 0, 250, 40);
         label.setForeground(Color.LIGHT_GRAY);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
@@ -23,9 +23,12 @@ public class HotkeyChanger extends JFrame {
         this.add(label);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
+
     public void close(int keyCode) {
         active = false;
-        GUI.hotkeyLabel.setText(String.valueOf(keyCode));
+        String name;
+        name = "<HTML>" + NativeKeyEvent.getKeyText(keyCode) + "</HTML>";
+        GUI.hotkeyLabel.setText(name);
         GUI.prop.setProperty("hotkey", String.valueOf(keyCode));
         Autoclicker.hotkey = keyCode;
         GUI.hotkeyChanger = null;
