@@ -25,7 +25,7 @@ public class Main {
                 }
                 @Override
                 public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
-                    if(nativeEvent.getKeyCode()==Autoclicker.hotkey) {
+                    if(nativeEvent.getKeyCode()==Autoclicker.hotkey && !HotkeyChanger.active) {
                         Autoclicker.toggle();
                     }
                     if(HotkeyChanger.active) {
