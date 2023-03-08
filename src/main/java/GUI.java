@@ -129,6 +129,7 @@ public class GUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLayout(null);
+        this.setResizable(false);
         this.setSize(400, 190);
         this.add(banner);
         this.add(delay);
