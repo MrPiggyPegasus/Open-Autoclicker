@@ -35,7 +35,7 @@ public class GUI extends JFrame {
     }
     GUI() {
         try {
-            FileInputStream fis = new FileInputStream("src/config.properties");
+            FileInputStream fis = new FileInputStream("config.properties");
             prop = new Properties();
             prop.load(fis);
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public class GUI extends JFrame {
             e.printStackTrace();
             System.exit(1);
         }
-        file = new File("src/config.properties");
+        file = new File("config.properties");
         defaultDelay = Integer.parseInt(prop.getProperty("delay"));
         Autoclicker.hotkey = Integer.parseInt(prop.getProperty("hotkey"));
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("icon.jpg")));
